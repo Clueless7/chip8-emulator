@@ -115,6 +115,15 @@ void chip8_cycle(chip8_t *chip8) {
     chip8->PC = NNN;
     break;
 
+  case 0x3000:
+    // 3XNNN Skips the next instruction if V[X] == NN
+    printf("Opcode %#04x: Skips the next instruction if V[%u] == %u\n", opcode,
+           X, NN);
+    if (chip8->V[X] == NN) {
+      chip8->PC += 2;
+    }
+    break;
+
   case 0x6000:
     // 6XNN Sets VX to NN
     printf("Opcode %#04x: Sets V[%u] to %u\n", opcode, X, NN);
