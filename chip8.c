@@ -25,7 +25,6 @@ static const uint8_t chip8_fontset[80] = {
 
 void chip8_clear_display(chip8_t *chip8) {
   memset(chip8->display, false, sizeof(chip8->display));
-  chip8->draw_flag = true;
 }
 
 void chip8_init(chip8_t *chip8) {
@@ -166,7 +165,6 @@ void chip8_cycle(chip8_t *chip8) {
       }
     }
 
-    chip8->draw_flag = true;
     break;
   }
 

@@ -46,7 +46,6 @@ void handle_input(chip8_t *chip8, bool *should_run, bool *debug) {
       switch (event.key.key) {
       case SDLK_F1:
         *debug = !*debug;
-        chip8->draw_flag = true;
         break;
       default:
         break;
@@ -98,7 +97,6 @@ void draw_screen(chip8_t *chip8, const sdl_t sdl, bool *debug) {
   }
 
   SDL_RenderPresent(sdl.renderer);
-  chip8->draw_flag = false;
 }
 
 int main(int argc, char *argv[]) {
@@ -132,9 +130,7 @@ int main(int argc, char *argv[]) {
 
     chip8_cycle(&chip8);
 
-    if (chip8.draw_flag) {
-      draw_screen(&chip8, sdl, &debug);
-    }
+    draw_screen(&chip8, sdl, &debug);
 
     // Need to target 16ms delay for 60 fps
     Uint64 frame_time = SDL_GetTicksNS() - frame_start;

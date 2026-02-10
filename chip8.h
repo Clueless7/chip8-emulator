@@ -33,8 +33,6 @@ typedef struct {
   // Graphics
   bool display[CHIP8_SCREEN_WIDTH * CHIP8_SCREEN_HEIGHT];
 
-  // State
-  bool draw_flag;
 } chip8_t;
 
 void chip8_init(chip8_t *chip8);
