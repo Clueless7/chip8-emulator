@@ -1,5 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include "chip8.h"
 
@@ -37,6 +39,9 @@ void chip8_init(chip8_t *chip8) {
   }
 
   chip8_clear_display(chip8);
+
+  // Used for CXNN opcode
+  srand(time(NULL));
 }
 
 bool chip8_load_rom(chip8_t *chip8, const char *filename) {
@@ -165,6 +170,14 @@ void chip8_cycle(chip8_t *chip8) {
     printf("Opcode %#04x: Jumps to the address V[0] + %u\n", opcode, NNN);
     chip8->PC = chip8->V[0] + NNN;
     break;
+
+  case 0xC000: {
+    // CXNN Sets VX to rand() & NN
+    printf("Opcode %#04x: Sets V[%u] to rand() & %u\n", opcode, X, NN);
+    uint8_t random_number = rand(); // Generate random number from 0 to 255
+    chip8->V[X] = random_number & NN;
+    break;
+  }
 
   case 0xD000: {
     // DXYN
