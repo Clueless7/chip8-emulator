@@ -174,7 +174,8 @@ void chip8_cycle(chip8_t *chip8) {
   case 0xC000: {
     // CXNN Sets VX to rand() & NN
     printf("Opcode %#04x: Sets V[%u] to rand() & %u\n", opcode, X, NN);
-    uint8_t random_number = rand(); // Generate random number from 0 to 255
+    uint8_t random_number =
+        rand() % 256; // Generate random number from 0 to 255
     chip8->V[X] = random_number & NN;
     break;
   }
