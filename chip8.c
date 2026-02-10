@@ -227,6 +227,11 @@ void chip8_cycle(chip8_t *chip8) {
       printf("Opcode %#04x: Sets the delay timer to V[%u]\n", opcode, X);
       chip8->delay_timer = chip8->V[X];
       break;
+    case 0x001E:
+      // FX1E Adds VX to I
+      printf("Opcode %#04x: Adds V[%u] to I\n", opcode, X);
+      chip8->I += chip8->V[X];
+      break;
     default:
       fprintf(stderr, "Unknown opcode: %#04x\n", opcode);
       break;
