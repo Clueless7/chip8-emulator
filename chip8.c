@@ -95,12 +95,12 @@ void chip8_cycle(chip8_t *chip8) {
     switch (opcode) {
     case 0x00E0:
       // 00E0 Clears the screen
-      printf("Opcode %#04x: Clears the screen\n", opcode);
+      printf("Opcode 0x%04x: Clears the screen\n", opcode);
       chip8_clear_display(chip8);
       break;
     case 0x00EE:
       // 00EE Returns from a subroutine
-      printf("Opcode %#04x: Returns from a subroutine\n", opcode);
+      printf("Opcode 0x%04x: Returns from a subroutine\n", opcode);
       chip8->sp--;
       chip8->PC = chip8->stack[chip8->sp];
       break;
@@ -213,6 +213,24 @@ void chip8_cycle(chip8_t *chip8) {
 
     break;
   }
+
+  case 0xF000:
+    switch (opcode & 0x00FF) {
+    case 0x0007:
+      // FX07 Sets VX to the delay timer
+      printf("Opcode %#04x: Sets V[%u] to the delay timer\n", opcode, X);
+      chip8->V[X] = chip8->delay_timer;
+      break;
+    case 0x0015:
+      // FX15 Sets the delay timer to VX
+      printf("Opcode %#04x: Sets the delay timer to V[%u]\n", opcode, X);
+      chip8->delay_timer = chip8->V[X];
+      break;
+    default:
+      fprintf(stderr, "Unknown opcode: %#04x\n", opcode);
+      break;
+    }
+    break;
 
   default:
     fprintf(stderr, "Unknown opcode: %#04x\n", opcode);
