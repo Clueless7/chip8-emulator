@@ -374,6 +374,19 @@ void chip8_cycle(chip8_t *chip8) {
              opcode, X);
       chip8->I = chip8->V[X] * 5;
       break;
+    case 0x0033: {
+      // FX33 Stores the decimal representation of VX with 100s digit to memory
+      // location I 10s digit to I+1 and ones digit to I+3
+      // E.g. if value is 210
+      // I + 0 = 2
+      // I + 1 = 1
+      // I + 3 = 0
+      uint8_t value = chip8->V[X];
+      chip8->ram[chip8->I] = value / 100;
+      chip8->ram[chip8->I + 1] = (value / 10) % 10;
+      chip8->ram[chip8->I + 2] = value % 10;
+      break;
+    }
     default:
       fprintf(stderr, "\x1b[31mUnknown opcode: %#04x\x1b[0m\n", opcode);
       break;
