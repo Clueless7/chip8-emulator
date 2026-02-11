@@ -9,6 +9,9 @@
 #define SCALE 20
 #define WINDOW_WIDTH (CHIP8_SCREEN_WIDTH * SCALE)
 #define WINDOW_HEIGHT (CHIP8_SCREEN_HEIGHT * SCALE)
+#define CPU_HZ 600
+#define FPS 60
+#define CYCLES_PER_FRAME (CPU_HZ / FPS)
 
 typedef struct {
   SDL_Window *window;
@@ -228,7 +231,7 @@ int main(int argc, char *argv[]) {
   bool should_run = true;
   bool debug = false;
 
-  const Uint64 TARGET_FPS = 60;
+  const Uint64 TARGET_FPS = FPS;
   const Uint64 FRAME_DELAY_NS = 1e9 / TARGET_FPS; // 1ns / FPS
 
   // Main emulator loop
@@ -237,7 +240,7 @@ int main(int argc, char *argv[]) {
 
     handle_input(&chip8, &should_run, &debug);
 
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < CYCLES_PER_FRAME; i++) {
       chip8_cycle(&chip8);
     }
 
