@@ -51,7 +51,7 @@ F1 - Show grid
 - [x] EX9E
 - [x] EXA1
 - [x] FX07
-- [ ] FX0A
+- [x] FX0A
 - [x] FX15
 - [X] FX18
 - [x] FX1E
