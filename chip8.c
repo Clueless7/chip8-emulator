@@ -188,15 +188,12 @@ void chip8_cycle(chip8_t *chip8) {
       printf("Opcode %#04x: Adds V[%u] to V[%u], Sets VF to 1 if there's an "
              "overflow otherwise 0\n",
              opcode, Y, X);
-      chip8->V[X] += chip8->V[Y];
+      // uint16 to store more than 256
+      uint16_t sum = chip8->V[X] + chip8->V[Y];
 
-      // Set VF to 1 if theres an overflow
-      // 255 because V is uint8
-      if (chip8->V[X] + chip8->V[Y] > 255) {
-        chip8->V[0xF] = 1;
-      } else {
-        chip8->V[0xF] = 0;
-      }
+      chip8->V[0xF] = (sum > 255);
+      // sum & 0xFF wraps sum to 255 e.g. 256 = 0, 257 = 1
+      chip8->V[X] = sum & 0xFF;
       break;
     case 0x0005:
       // 8XY5 VY is subtracted from VX, Sets VF to 0 if theres an underflow
@@ -204,13 +201,9 @@ void chip8_cycle(chip8_t *chip8) {
       printf("Opcode %#04x: V[%u] is subtracted from V[%u], Sets VF to 0 if "
              "theres an underflow otherwise 1\n",
              opcode, Y, X);
+      // If VX is larger than VY there is no underflow
+      chip8->V[0xF] = (chip8->V[X] >= chip8->V[Y]);
       chip8->V[X] -= chip8->V[Y];
-      // Set VF to 0 if theres an underflow
-      if (chip8->V[X] >= chip8->V[Y]) {
-        chip8->V[0xF] = 0;
-      } else {
-        chip8->V[0xF] = 1;
-      }
       break;
     case 0x0006:
       // 8XY6 Shifts VX to the right by 1, Sets VF to the least significant bit
