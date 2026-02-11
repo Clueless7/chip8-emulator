@@ -319,7 +319,7 @@ void chip8_cycle(chip8_t *chip8) {
       // EX9E Skips the next instruction if key() == VX
       printf("Opcode %#04x: Skips the next instruction if key() == V[%u]\n",
              opcode, X);
-      if (chip8->display[chip8->V[X]]) {
+      if (chip8->keypad[chip8->V[X]]) {
         chip8->PC += 2;
       }
       break;
@@ -327,7 +327,7 @@ void chip8_cycle(chip8_t *chip8) {
       // EXA1 Skips the next instruction if key() != VX
       printf("Opcode %#04x: Skips the next instruction if key() != V[%u]\n",
              opcode, X);
-      if (!chip8->display[chip8->V[X]]) {
+      if (!chip8->keypad[chip8->V[X]]) {
         chip8->PC += 2;
       }
       break;
@@ -344,15 +344,37 @@ void chip8_cycle(chip8_t *chip8) {
       printf("Opcode %#04x: Sets V[%u] to the delay timer\n", opcode, X);
       chip8->V[X] = chip8->delay_timer;
       break;
-    case 0x000A:
-      // FX0A
-      // static bool any_key_pressed = false;
-      // static uint8_t key = 0xFF;
-      //
-      // for (uint8_t i = 0; key == 0x; inc-expression) {
-      //
-      // }
+    case 0x000A: {
+      // FX0A Await key press then store to VX
+      printf("Opcode %#04x: Await key press then store to V[%u]\n", opcode, X);
+      static bool any_key_pressed = false;
+      static uint8_t key = 0xFF;
+
+      for (uint8_t i = 0; key == 0xFF && i < sizeof(chip8->keypad); i++) {
+        if (chip8->keypad[i]) {
+          key = i;
+          any_key_pressed = true;
+          break;
+        }
+      }
+
+      // If no key has been pressed pause emulator
+      if (!any_key_pressed) {
+        chip8->PC -= 2;
+      } else {
+        // A key has been pressed
+        if (chip8->keypad[key]) {
+          // Pause until key is released
+          chip8->PC -= 2;
+        } else {
+          chip8->V[X] = key;
+          key = 0xFF;
+          any_key_pressed = false;
+        }
+      }
+
       break;
+    }
     case 0x0015:
       // FX15 Sets the delay timer to VX
       printf("Opcode %#04x: Sets the delay timer to V[%u]\n", opcode, X);
