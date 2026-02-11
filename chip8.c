@@ -228,7 +228,7 @@ void chip8_cycle(chip8_t *chip8) {
              "significant bit of V[%u] to VF\n",
              opcode, X, X);
       // Store most significant bit of VX to VF
-      chip8->V[0xF] = (chip8->V[X] & 0b10000000);
+      chip8->V[0xF] = (chip8->V[X] & 0b10000000) >> 7;
       chip8->V[X] <<= 1;
       break;
     default:
