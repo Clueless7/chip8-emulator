@@ -369,6 +369,9 @@ void chip8_cycle(chip8_t *chip8) {
       break;
     case 0x0029:
       // FX29 Sets I to the location of the sprite for the character in VX
+      printf("Opcode %#04x: Sets I to the location of the sprite for the "
+             "character in V[%u]\n",
+             opcode, X);
       chip8->I = chip8->V[X] * 5;
       break;
     default:
