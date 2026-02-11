@@ -381,12 +381,23 @@ void chip8_cycle(chip8_t *chip8) {
       // I + 0 = 2
       // I + 1 = 1
       // I + 3 = 0
+      printf(
+          "Opcode %#04x: Stores binary coded decimal representation of V[%u]\n",
+          opcode, X);
       uint8_t value = chip8->V[X];
       chip8->ram[chip8->I] = value / 100;
       chip8->ram[chip8->I + 1] = (value / 10) % 10;
       chip8->ram[chip8->I + 2] = value % 10;
       break;
     }
+    case 0x0055:
+      // FX55 Stores from V0 to VX (including VX) in memory, starting at address
+      // I. The offset from I is increased by 1 for each value written
+      printf("Opcode %#04x: reg_dump(V[%u], &I)\n", opcode, X);
+      for (int i = 0; i <= X; i++) {
+        chip8->ram[chip8->I + i] = chip8->V[i];
+      }
+      break;
     default:
       fprintf(stderr, "\x1b[31mUnknown opcode: %#04x\x1b[0m\n", opcode);
       break;
