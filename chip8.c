@@ -284,8 +284,8 @@ void chip8_cycle(chip8_t *chip8) {
         // Check if bit is on from most to least significant bit
         if (sprite & (0b10000000 >> col)) {
           // Get the display index
-          uint8_t px = (x_coord + col);
-          uint8_t py = (y_coord + row);
+          uint8_t px = (x_coord + col) % CHIP8_SCREEN_WIDTH;
+          uint8_t py = (y_coord + row) % CHIP8_SCREEN_HEIGHT;
           int index = py * CHIP8_SCREEN_WIDTH + px;
 
           // Sprite pixel is on and display pixel is on
