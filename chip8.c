@@ -183,6 +183,20 @@ void chip8_cycle(chip8_t *chip8) {
       printf("Opcode %#04x: Sets V[%u] to V[%u] xor V[%u]\n", opcode, X, X, Y);
       chip8->V[X] ^= chip8->V[Y];
       break;
+    case 0x0004:
+      // 8XY4 Adds VY to VX, Sets VF to 1 if there's an overflow otherwise 0
+      printf("Opcode %#04x: Adds V[%u] to V[%u], Sets VF to 1 if there's an "
+             "overflow otherwise 0\n",
+             opcode, Y, X);
+      chip8->V[X] += chip8->V[Y];
+
+      // Set VF to 1 if theres an overflow
+      if (chip8->V[X] + chip8->V[Y] > 255) {
+        chip8->V[0xF] = 1;
+      } else {
+        chip8->V[0xF] = 0;
+      }
+      break;
     default:
       fprintf(stderr, "Unknown opcode: %#04x\n", opcode);
       break;
