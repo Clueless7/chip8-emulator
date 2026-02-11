@@ -221,6 +221,18 @@ void chip8_cycle(chip8_t *chip8) {
       chip8->V[0xF] = (chip8->V[X] & 1);
       chip8->V[X] >>= 1;
       break;
+    case 0x0007:
+      // 8XY7 Sets VX to VY - VX, VF is set to 1 if VY >= VX
+      printf("Opcode %#04x: Sets V[%u] to V[%u] - V[%u], VF is set to 1 if "
+             "V[%u] >= V[%u]",
+             opcode, X, Y, X, Y, X);
+      if (chip8->V[Y] >= chip8->V[X]) {
+        chip8->V[0xF] = 0;
+      } else {
+        chip8->V[0xF] = 1;
+      }
+      chip8->V[X] = chip8->V[Y] - chip8->V[X];
+      break;
     default:
       fprintf(stderr, "Unknown opcode: %#04x\n", opcode);
       break;
