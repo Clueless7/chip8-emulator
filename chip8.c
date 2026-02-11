@@ -172,6 +172,17 @@ void chip8_cycle(chip8_t *chip8) {
              X, Y);
       chip8->V[X] |= chip8->V[Y];
       break;
+    case 0x0002:
+      // 8XY2 Sets VX to VX bitwise and VY
+      printf("Opcode %#04x: Sets V[%u] to V[%u] bitwise and V[%u]\n", opcode, X,
+             X, Y);
+      chip8->V[X] &= chip8->V[Y];
+      break;
+    case 0x0003:
+      // 8XY3 Sets VX to VX xor VY
+      printf("Opcode %#04x: Sets V[%u] to V[%u] xor V[%u]\n", opcode, X, X, Y);
+      chip8->V[X] ^= chip8->V[Y];
+      break;
     default:
       fprintf(stderr, "Unknown opcode: %#04x\n", opcode);
       break;
