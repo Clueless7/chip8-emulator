@@ -191,10 +191,25 @@ void chip8_cycle(chip8_t *chip8) {
       chip8->V[X] += chip8->V[Y];
 
       // Set VF to 1 if theres an overflow
+      // 255 because V is uint8
       if (chip8->V[X] + chip8->V[Y] > 255) {
         chip8->V[0xF] = 1;
       } else {
         chip8->V[0xF] = 0;
+      }
+      break;
+    case 0x0005:
+      // 8XY5 VY is subtracted from VX, Sets VF to 0 if theres an underflow
+      // otherwise 1
+      printf("Opcode %#04x: V[%u] is subtracted from V[%u], Sets VF to 0 if "
+             "theres an underflow otherwise 1",
+             opcode, Y, X);
+      chip8->V[X] -= chip8->V[Y];
+      // Set VF to 0 if theres an underflow
+      if (chip8->V[X] >= chip8->V[Y]) {
+        chip8->V[0xF] = 0;
+      } else {
+        chip8->V[0xF] = 1;
       }
       break;
     default:
