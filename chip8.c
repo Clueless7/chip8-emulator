@@ -398,12 +398,20 @@ void chip8_cycle(chip8_t *chip8) {
         chip8->ram[chip8->I + i] = chip8->V[i];
       }
       break;
+    case 0x0065:
+      // FX65 Fills from V0 to VX (including VX) with values from memory,
+      // starting at address I. The offset from I is increased by 1 for each
+      // value read, but I itself is left unmodified.
+      printf("Opcode %#04x: reg_load(V[%u], &I)\n", opcode, X);
+      for (int i = 0; i <= X; i++) {
+        chip8->V[i] = chip8->ram[chip8->I + i];
+      }
+      break;
     default:
       fprintf(stderr, "\x1b[31mUnknown opcode: %#04x\x1b[0m\n", opcode);
       break;
     }
     break;
-
   default:
     fprintf(stderr, "\x1b[31mUnknown opcode: %#04x\x1b[0m\n", opcode);
     break;
