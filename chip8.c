@@ -212,6 +212,15 @@ void chip8_cycle(chip8_t *chip8) {
         chip8->V[0xF] = 1;
       }
       break;
+    case 0x0006:
+      // 8XY6 Shifts VX to the right by 1, Sets VF to the least significant bit
+      // of VX prior to shift
+      printf("Opcode %#04x: Shifts V[%u] to the right by 1, Sets VF to the "
+             "least significant bit of V[%u] prior to shift",
+             opcode, X, X);
+      chip8->V[0xF] = (chip8->V[X] & 1);
+      chip8->V[X] >>= 1;
+      break;
     default:
       fprintf(stderr, "Unknown opcode: %#04x\n", opcode);
       break;
