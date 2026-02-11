@@ -248,6 +248,15 @@ void chip8_cycle(chip8_t *chip8) {
     }
     break;
 
+  case 0x9000:
+    // 9XY0 Skips the next instruction if VX != VY
+    printf("Opcode %#04x: Skips the next instruction if V[%u] != V[%u]\n",
+           opcode, X, Y);
+    if (chip8->V[X] != chip8->V[Y]) {
+      chip8->PC += 2;
+    }
+    break;
+
   case 0xA000:
     // ANNN Sets I to address NNN
     printf("Opcode %#04x: Sets I to %#x\n", opcode, NNN);
