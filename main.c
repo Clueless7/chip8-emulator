@@ -163,7 +163,6 @@ void handle_input(chip8_t *chip8, bool *should_run, bool *debug) {
     }
   }
 }
-}
 
 void cleanup(const sdl_t sdl) {
   SDL_DestroyRenderer(sdl.renderer);

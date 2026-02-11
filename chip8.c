@@ -243,7 +243,7 @@ void chip8_cycle(chip8_t *chip8) {
       chip8->V[X] <<= 1;
       break;
     default:
-      fprintf(stderr, "Unknown opcode: %#04x\n", opcode);
+      fprintf(stderr, "\x1b[31mUnknown opcode: %#04x\x1b[0m\n", opcode);
       break;
     }
     break;
@@ -332,7 +332,7 @@ void chip8_cycle(chip8_t *chip8) {
       }
       break;
     default:
-      fprintf(stderr, "Unknown opcode: %#04x\n", opcode);
+      fprintf(stderr, "\x1b[31mUnknown opcode: %#04x\x1b[0m\n", opcode);
       break;
     }
     break;
@@ -369,13 +369,13 @@ void chip8_cycle(chip8_t *chip8) {
       chip8->I += chip8->V[X];
       break;
     default:
-      fprintf(stderr, "Unknown opcode: %#04x\n", opcode);
+      fprintf(stderr, "\x1b[31mUnknown opcode: %#04x\x1b[0m\n", opcode);
       break;
     }
     break;
 
   default:
-    fprintf(stderr, "Unknown opcode: %#04x\n", opcode);
+    fprintf(stderr, "\x1b[31mUnknown opcode: %#04x\x1b[0m\n", opcode);
     break;
   }
 
