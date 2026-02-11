@@ -68,7 +68,7 @@ bool chip8_load_rom(chip8_t *chip8, const char *filename) {
 }
 
 void chip8_set_key(chip8_t *chip8, uint8_t key, bool pressed) {
-  if (key > CHIP8_NUM_KEYS) {
+  if (key >= CHIP8_NUM_KEYS) {
     return;
   }
 
