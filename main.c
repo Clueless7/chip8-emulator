@@ -47,12 +47,122 @@ void handle_input(chip8_t *chip8, bool *should_run, bool *debug) {
       case SDLK_F1:
         *debug = !*debug;
         break;
+
+      case SDLK_1:
+        chip8_set_key(chip8, 0x1, true);
+        break;
+      case SDLK_2:
+        chip8_set_key(chip8, 0x2, true);
+        break;
+      case SDLK_3:
+        chip8_set_key(chip8, 0x2, true);
+        break;
+      case SDLK_4:
+        chip8_set_key(chip8, 0xC, true);
+        break;
+
+      case SDLK_Q:
+        chip8_set_key(chip8, 0x4, true);
+        break;
+      case SDLK_W:
+        chip8_set_key(chip8, 0x5, true);
+        break;
+      case SDLK_E:
+        chip8_set_key(chip8, 0x6, true);
+        break;
+      case SDLK_R:
+        chip8_set_key(chip8, 0xD, true);
+        break;
+
+      case SDLK_A:
+        chip8_set_key(chip8, 0x7, true);
+        break;
+      case SDLK_S:
+        chip8_set_key(chip8, 0x8, true);
+        break;
+      case SDLK_D:
+        chip8_set_key(chip8, 0x9, true);
+        break;
+      case SDLK_F:
+        chip8_set_key(chip8, 0xE, true);
+        break;
+
+      case SDLK_Z:
+        chip8_set_key(chip8, 0xA, true);
+        break;
+      case SDLK_X:
+        chip8_set_key(chip8, 0x0, true);
+        break;
+      case SDLK_C:
+        chip8_set_key(chip8, 0xB, true);
+        break;
+      case SDLK_V:
+        chip8_set_key(chip8, 0xF, true);
+        break;
+
       default:
         break;
       }
     } else if (event.type == SDL_EVENT_KEY_UP) {
+      switch (event.key.key) {
+      case SDLK_1:
+        chip8_set_key(chip8, 0x1, false);
+        break;
+      case SDLK_2:
+        chip8_set_key(chip8, 0x2, false);
+        break;
+      case SDLK_3:
+        chip8_set_key(chip8, 0x2, false);
+        break;
+      case SDLK_4:
+        chip8_set_key(chip8, 0xC, false);
+        break;
+
+      case SDLK_Q:
+        chip8_set_key(chip8, 0x4, false);
+        break;
+      case SDLK_W:
+        chip8_set_key(chip8, 0x5, false);
+        break;
+      case SDLK_E:
+        chip8_set_key(chip8, 0x6, false);
+        break;
+      case SDLK_R:
+        chip8_set_key(chip8, 0xD, false);
+        break;
+
+      case SDLK_A:
+        chip8_set_key(chip8, 0x7, false);
+        break;
+      case SDLK_S:
+        chip8_set_key(chip8, 0x8, false);
+        break;
+      case SDLK_D:
+        chip8_set_key(chip8, 0x9, false);
+        break;
+      case SDLK_F:
+        chip8_set_key(chip8, 0xE, false);
+        break;
+
+      case SDLK_Z:
+        chip8_set_key(chip8, 0xA, false);
+        break;
+      case SDLK_X:
+        chip8_set_key(chip8, 0x0, false);
+        break;
+      case SDLK_C:
+        chip8_set_key(chip8, 0xB, false);
+        break;
+      case SDLK_V:
+        chip8_set_key(chip8, 0xF, false);
+        break;
+
+      default:
+        break;
+      }
     }
   }
+}
 }
 
 void cleanup(const sdl_t sdl) {
