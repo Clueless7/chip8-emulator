@@ -237,7 +237,11 @@ int main(int argc, char *argv[]) {
 
     handle_input(&chip8, &should_run, &debug);
 
-    chip8_cycle(&chip8);
+    for (int i = 0; i < 10; i++) {
+      chip8_cycle(&chip8);
+    }
+
+    chip8_decrement_timers(&chip8);
 
     draw_screen(&chip8, sdl, &debug);
 

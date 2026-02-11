@@ -377,8 +377,9 @@ void chip8_cycle(chip8_t *chip8) {
     fprintf(stderr, "\x1b[31mUnknown opcode: %#04x\x1b[0m\n", opcode);
     break;
   }
+}
 
-  // Decrement timers
+void chip8_decrement_timers(chip8_t *chip8) {
   if (chip8->delay_timer > 0) {
     chip8->delay_timer--;
   }

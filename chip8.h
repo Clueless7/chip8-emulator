@@ -40,5 +40,6 @@ bool chip8_load_rom(chip8_t *chip8, const char *filename);
 void chip8_cycle(chip8_t *chip8);
 void chip8_set_key(chip8_t *chip8, uint8_t key, bool pressed);
 void chip8_clear_display(chip8_t *chip8);
+void chip8_decrement_timers(chip8_t *chip8);
 
 #endif
