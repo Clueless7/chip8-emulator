@@ -202,7 +202,7 @@ void chip8_cycle(chip8_t *chip8) {
       // 8XY5 VY is subtracted from VX, Sets VF to 0 if theres an underflow
       // otherwise 1
       printf("Opcode %#04x: V[%u] is subtracted from V[%u], Sets VF to 0 if "
-             "theres an underflow otherwise 1",
+             "theres an underflow otherwise 1\n",
              opcode, Y, X);
       chip8->V[X] -= chip8->V[Y];
       // Set VF to 0 if theres an underflow
@@ -216,7 +216,7 @@ void chip8_cycle(chip8_t *chip8) {
       // 8XY6 Shifts VX to the right by 1, Sets VF to the least significant bit
       // of VX prior to shift
       printf("Opcode %#04x: Shifts V[%u] to the right by 1, Sets VF to the "
-             "least significant bit of V[%u] prior to shift",
+             "least significant bit of V[%u] prior to shift\n",
              opcode, X, X);
       chip8->V[0xF] = (chip8->V[X] & 1);
       chip8->V[X] >>= 1;
@@ -224,7 +224,7 @@ void chip8_cycle(chip8_t *chip8) {
     case 0x0007:
       // 8XY7 Sets VX to VY - VX, VF is set to 1 if VY >= VX
       printf("Opcode %#04x: Sets V[%u] to V[%u] - V[%u], VF is set to 1 if "
-             "V[%u] >= V[%u]",
+             "V[%u] >= V[%u]\n",
              opcode, X, Y, X, Y, X);
       if (chip8->V[Y] >= chip8->V[X]) {
         chip8->V[0xF] = 0;
@@ -232,6 +232,15 @@ void chip8_cycle(chip8_t *chip8) {
         chip8->V[0xF] = 1;
       }
       chip8->V[X] = chip8->V[Y] - chip8->V[X];
+      break;
+    case 0x000E:
+      // 8XYE Shifts VX to the left by 1, Store most significant bit of VX to VF
+      printf("Opcode %#04x: Shifts V[%u] to the left by 1, Store the most "
+             "significant bit of V[%u] to VF\n",
+             opcode, X, X);
+      // Store most significant bit of VX to VF
+      chip8->V[0xF] = (chip8->V[X] & 0b10000000);
+      chip8->V[X] <<= 1;
       break;
     default:
       fprintf(stderr, "Unknown opcode: %#04x\n", opcode);
