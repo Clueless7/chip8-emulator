@@ -120,7 +120,7 @@ int main(int argc, char *argv[]) {
   bool debug = false;
 
   const Uint64 TARGET_FPS = 60;
-  const Uint64 FRAME_DELAY_NS = 1000000000 / TARGET_FPS; // 1ns / FPS
+  const Uint64 FRAME_DELAY_NS = 1e9 / TARGET_FPS; // 1ns / FPS
 
   // Main emulator loop
   while (should_run) {
