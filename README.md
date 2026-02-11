@@ -24,7 +24,7 @@ Run `make` in the project directory.
 F1 - Show grid
 
 ## Opcodes Implemented
-- [ ] 0NNN
+- [ ] 0NNN (Not Applicable)
 - [x] 00E0
 - [x] 00EE
 - [x] 1NNN
@@ -55,7 +55,7 @@ F1 - Show grid
 - [x] FX15
 - [X] FX18
 - [x] FX1E
-- [ ] FX29
-- [ ] FX33
-- [ ] FX55
-- [ ] FX65
+- [x] FX29
+- [x] FX33
+- [x] FX55
+- [x] FX65
