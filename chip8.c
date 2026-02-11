@@ -367,6 +367,10 @@ void chip8_cycle(chip8_t *chip8) {
       printf("Opcode %#04x: Adds V[%u] to I\n", opcode, X);
       chip8->I += chip8->V[X];
       break;
+    case 0x0029:
+      // FX29 Sets I to the location of the sprite for the character in VX
+      chip8->I = chip8->V[X] * 5;
+      break;
     default:
       fprintf(stderr, "\x1b[31mUnknown opcode: %#04x\x1b[0m\n", opcode);
       break;
