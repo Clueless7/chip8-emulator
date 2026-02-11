@@ -1,3 +1,5 @@
+<img width="1356" height="737" alt="CHIP8" src="https://github.com/user-attachments/assets/4639e4cd-7d0d-4fff-a90b-d8d380819a64" />
+
 # CHIP-8 Emulator
 
 CHIP-8 Emulator/Interpreter created using C and SDL3.
@@ -30,6 +32,16 @@ F1 - Show grid
 | A | 0 | B | F |            | Z | X | C | V |
   CHIP-8 Keypad                  Keyboard
 ```
+
+## Some images
+
+<img width="1356" height="737" alt="Tetris" src="https://github.com/user-attachments/assets/c2409400-7678-44f3-9bc9-259569904355" />
+
+Tetris
+
+<img width="1356" height="737" alt="Pong" src="https://github.com/user-attachments/assets/d9c134df-69a3-4f7b-8f29-977b10936039" />
+
+Pong
 
 ## Opcodes Implemented
 - [ ] 0NNN (Not Applicable)
