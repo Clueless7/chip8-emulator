@@ -313,12 +313,45 @@ void chip8_cycle(chip8_t *chip8) {
     break;
   }
 
+  case 0xE000:
+    switch (opcode & 0x00FF) {
+    case 0x009E:
+      // EX9E Skips the next instruction if key() == VX
+      printf("Opcode %#04x: Skips the next instruction if key() == V[%u]\n",
+             opcode, X);
+      if (chip8->display[chip8->V[X]]) {
+        chip8->PC += 2;
+      }
+      break;
+    case 0x00A1:
+      // EXA1 Skips the next instruction if key() != VX
+      printf("Opcode %#04x: Skips the next instruction if key() != V[%u]\n",
+             opcode, X);
+      if (!chip8->display[chip8->V[X]]) {
+        chip8->PC += 2;
+      }
+      break;
+    default:
+      fprintf(stderr, "Unknown opcode: %#04x\n", opcode);
+      break;
+    }
+    break;
+
   case 0xF000:
     switch (opcode & 0x00FF) {
     case 0x0007:
       // FX07 Sets VX to the delay timer
       printf("Opcode %#04x: Sets V[%u] to the delay timer\n", opcode, X);
       chip8->V[X] = chip8->delay_timer;
+      break;
+    case 0x000A:
+      // FX0A
+      // static bool any_key_pressed = false;
+      // static uint8_t key = 0xFF;
+      //
+      // for (uint8_t i = 0; key == 0x; inc-expression) {
+      //
+      // }
       break;
     case 0x0015:
       // FX15 Sets the delay timer to VX
