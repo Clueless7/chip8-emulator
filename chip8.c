@@ -154,9 +154,28 @@ void chip8_cycle(chip8_t *chip8) {
     break;
 
   case 0x7000:
-    // 7XNN Adss NN to VX
+    // 7XNN Adds NN to VX
     printf("Opcode %#04x: Adds %u to V[%u]\n", opcode, NN, X);
     chip8->V[X] += NN;
+    break;
+
+  case 0x8000:
+    switch (opcode & 0x000F) {
+    case 0x0000:
+      // 8XY0 Sets VX to the value VY
+      printf("Opcode %#04x: Sets V[%u] to the value V[%u]\n", opcode, X, Y);
+      chip8->V[X] = chip8->V[Y];
+      break;
+    case 0x0001:
+      // 8XY1 Sets VX to VX bitwise or VY
+      printf("Opcode %#04x: Sets V[%u] to V[%u] bitwise or V[%u]\n", opcode, X,
+             X, Y);
+      chip8->V[X] |= chip8->V[Y];
+      break;
+    default:
+      fprintf(stderr, "Unknown opcode: %#04x\n", opcode);
+      break;
+    }
     break;
 
   case 0xA000:
