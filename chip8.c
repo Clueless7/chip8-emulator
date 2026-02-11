@@ -347,30 +347,18 @@ void chip8_cycle(chip8_t *chip8) {
     case 0x000A: {
       // FX0A Await key press then store to VX
       printf("Opcode %#04x: Await key press then store to V[%u]\n", opcode, X);
-      static bool any_key_pressed = false;
-      static uint8_t key = 0xFF;
+      bool key_found = false;
 
-      for (uint8_t i = 0; key == 0xFF && i < sizeof(chip8->keypad); i++) {
+      for (uint8_t i = 0; i < CHIP8_NUM_KEYS; i++) {
         if (chip8->keypad[i]) {
-          key = i;
-          any_key_pressed = true;
+          chip8->V[X] = i;
+          key_found = true;
           break;
         }
       }
 
-      // If no key has been pressed pause emulator
-      if (!any_key_pressed) {
+      if (!key_found) {
         chip8->PC -= 2;
-      } else {
-        // A key has been pressed
-        if (chip8->keypad[key]) {
-          // Pause until key is released
-          chip8->PC -= 2;
-        } else {
-          chip8->V[X] = key;
-          key = 0xFF;
-          any_key_pressed = false;
-        }
       }
 
       break;
