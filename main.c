@@ -55,7 +55,7 @@ void handle_input(chip8_t *chip8, bool *should_run, bool *debug) {
         chip8_set_key(chip8, 0x2, true);
         break;
       case SDLK_3:
-        chip8_set_key(chip8, 0x2, true);
+        chip8_set_key(chip8, 0x3, true);
         break;
       case SDLK_4:
         chip8_set_key(chip8, 0xC, true);
@@ -112,7 +112,7 @@ void handle_input(chip8_t *chip8, bool *should_run, bool *debug) {
         chip8_set_key(chip8, 0x2, false);
         break;
       case SDLK_3:
-        chip8_set_key(chip8, 0x2, false);
+        chip8_set_key(chip8, 0x3, false);
         break;
       case SDLK_4:
         chip8_set_key(chip8, 0xC, false);
